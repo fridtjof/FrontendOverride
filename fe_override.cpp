@@ -10,7 +10,7 @@
 #define FE_UNCOMPRESSED_CHUNK_MAGIC 0x30203
 #define FE_PKG_MAGIC 0xE76E4546
 
-std::map<unsigned int, char *> bufs;
+std::map<unsigned int, char *> fng_chunks;
 
 void fe_override_load_overrides(const char *path) {
 	std::filesystem::path dirpath(path);
@@ -60,7 +60,7 @@ void fe_override_load_overrides(const char *path) {
 
 		auto hash = GetFngHash((chunk *)buf);
 		DEBUGF("override %x added, %llx bytes\n", hash, fs.gcount());
-		bufs[hash] = buf;
+		fng_chunks[hash] = buf;
 
 		count++;
 	}
@@ -69,8 +69,8 @@ void fe_override_load_overrides(const char *path) {
 }
 
 char * fe_override_get_override(unsigned int hash) {
-	if (bufs.find(hash) != bufs.end()) {
-		return (char *) bufs[hash];
+	if (fng_chunks.find(hash) != fng_chunks.end()) {
+		return (char *) fng_chunks[hash];
 	} else {
 		return nullptr;
 	}
