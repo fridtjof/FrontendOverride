@@ -9,16 +9,18 @@ void SetupConsole(bool disableBuffering) {
 	// if there's a console available (when launched from command line or an IDE), use it
 	// - open a new one otherwise
 	if (AttachConsole(ATTACH_PARENT_PROCESS) || AllocConsole()) {
-		freopen("CONIN$", "r", stdin);
-		freopen("CONOUT$", "w", stdout);
-		if (!IsDebuggerPresent())
-			freopen("CONOUT$", "w", stderr); // output dies after this with debugger attached?????
+		FILE *stream;
+		if (!IsDebuggerPresent()) { // for (unknown) reasons, this breaks all output with a debugger attached
+			freopen_s(&stream, "CONIN$", "r", stdin);
+			freopen_s(&stream, "CONOUT$", "w", stdout);
+			freopen_s(&stream, "CONOUT$", "w", stderr);
+		}
 	}
 
 	if (disableBuffering) {
-		// with buffering, you only get new output each newline
-		setbuf(stdout, NULL);
-		setbuf(stderr, NULL);
+		// with buffering, you only get new output each newline.
+		setvbuf(stdout, nullptr, _IONBF, 2);
+		setvbuf(stderr, nullptr, _IONBF, 2);
 	}
 }
 
