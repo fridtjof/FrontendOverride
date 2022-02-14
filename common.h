@@ -1,5 +1,6 @@
 #pragma once
 
+#include <cstdio>
 #define DEBUGF(fmt, ...) printf(fmt, __VA_ARGS__)
 
 struct chunk {
@@ -12,3 +13,5 @@ struct chunk {
 };
 
 unsigned int bin_hash(const char * str);
+
+unsigned int GetFngHash(chunk *chunk_ptr);

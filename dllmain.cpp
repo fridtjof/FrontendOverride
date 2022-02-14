@@ -1,7 +1,7 @@
 #include <Windows.h>
-#include <cstdio>
 #include <patcher/patcher.h>
 #include "common.h"
+#include "fe_override.h"
 
 unsigned char *windowedMode = (unsigned char *) 0x87098C; // ug2 ntsc us v1.2
 
@@ -36,12 +36,7 @@ BOOL WINAPI DllMain(HINSTANCE hInst, DWORD reason, LPVOID) {
 	StaticPatcher::Apply();
 	*windowedMode = 1;
 
-	//patch();
-
-	// at this point, we've done all our allocations (global vars, and also through stdlib code)
-	// so we can safely use the game's malloc/free from now on
-	//deleteFreeOverride = gameFree;
-	//newMallocOverride = gameMalloc;
+	fe_override_load_overrides("fngs/");
 
 	return TRUE;
 }
