@@ -3,6 +3,8 @@ project(fe_hotreload)
 
 set(CMAKE_CXX_STANDARD 17)
 
+set(CMAKE_GENERATOR_PLATFORM x86)
+
 add_subdirectory(patcher)
 
 add_library(fe_hotreload SHARED
