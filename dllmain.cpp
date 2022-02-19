@@ -1,7 +1,6 @@
 #include <Windows.h>
 #include <patcher/patcher.h>
 #include "common.h"
-#include "fe_override.h"
 
 unsigned char *windowedMode = (unsigned char *) 0x87098C; // ug2 ntsc us v1.2
 
@@ -36,7 +35,7 @@ BOOL WINAPI DllMain(HINSTANCE hInst, DWORD reason, LPVOID) {
 	StaticPatcher::Apply();
 	*windowedMode = 1;
 
-	fe_override_load_overrides("fngs/");
+	// for further init, see init.cpp. we need to defer until after the game's allocator has initialized.
 
 	return TRUE;
 }

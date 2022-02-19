@@ -10,6 +10,6 @@ add_subdirectory(patcher)
 add_library(fe_hotreload SHARED
         dllmain.cpp
         common.cpp common.h
-        fe_override.cpp fe_override.h)
+        fe_override.cpp fe_override.h hotkey.cpp alloc.cpp alloc.h init.cpp)
 
 target_link_libraries(fe_hotreload PUBLIC patcher)
